@@ -1,56 +1,55 @@
 <div class="container">
-    <div class="content-wrapper">
-      <h1>Tracks</h1>
-      <div class="content-section">
-  
-        <!-- Formulari de filtres -->
-        <div class="filters">
-          <label>
-            Nom del Track:
-            <input type="text" [(ngModel)]="filters.track_name" placeholder="Cerca per nom">
-          </label>
-          <label>
-            Nom de l'Artista:
-            <input type="text" [(ngModel)]="filters.artist_name" placeholder="Cerca per artista">
-          </label>
-          <label>
-            Idioma:
-            <select [(ngModel)]="filters.language">
-              <option value="">Tots</option>
-              <option *ngFor="let lang of availableLanguages" [value]="lang">{{ lang }}</option>
-            </select>
-          </label>
-          <label>
-            Popularitat Mínima:
-            <input type="number" [(ngModel)]="filters.popularity" min="0" max="100" placeholder="Ex: 50">
-          </label>
-          <button (click)="applyFilters()">Aplicar Filtres</button>
-          <button (click)="clearFilters()">Netejar Filtres</button>
-        </div>
-  
-        <!-- Taula -->
-        <table>
-          <thead>
-            <tr>
-              <th *ngFor="let header of headers">{{ header }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let track of currentData">
-              <td *ngFor="let key of headers">
-                {{ getDisplayValue(track[key]) }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-  
-        <!-- Paginació -->
-        <div class="pagination">
-          <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
-          <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
-          <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Siguiente</button>
-        </div>
+  <div class="content-wrapper">
+    <h1>Tracks</h1>
+    <div class="content-section">
+
+      <!-- Formulari de filtres -->
+      <div class="filters">
+        <label>
+          Nom del Track:
+          <input type="text" [(ngModel)]="filters.track_name" placeholder="Cerca per nom">
+        </label>
+        <label>
+          Nom de l'Artista:
+          <input type="text" [(ngModel)]="filters.artist_name" placeholder="Cerca per artista">
+        </label>
+        <label>
+          Idioma:
+          <select [(ngModel)]="filters.language">
+            <option value="">Tots</option>
+            <option *ngFor="let lang of availableLanguages" [value]="lang">{{ lang }}</option>
+          </select>
+        </label>
+        <label>
+          Popularitat Mínima:
+          <input type="number" [(ngModel)]="filters.popularity" min="0" max="100" placeholder="Ex: 50">
+        </label>
+        <button (click)="applyFilters()">Aplicar Filtres</button>
+        <button (click)="clearFilters()">Netejar Filtres</button>
+      </div>
+
+      <!-- Taula -->
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let header of headers">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let track of currentData">
+            <td *ngFor="let key of headers">
+              {{ getDisplayValue(track[key]) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Paginació -->
+      <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+        <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Siguiente</button>
       </div>
     </div>
   </div>
-  
+</div>
