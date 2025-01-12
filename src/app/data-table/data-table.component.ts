@@ -8,22 +8,33 @@ import { ITrack } from '../interfaces/track.interface';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  data: ITrack[] = [];
-  headers: (keyof ITrack)[] = []; // Especifica las claves válidas de ITrack
-  currentData: ITrack[] = [];
-  currentPage: number = 0;
-  itemsPerPage: number = 100;
-  totalPages: number = 0;
+  data: ITrack[] = []; // Totes les dades carregades
+  filteredData: ITrack[] = []; // Dades filtrades
+  currentData: ITrack[] = []; // Dades visibles a la pàgina actual
+  headers: (keyof ITrack)[] = []; // Caps de taula (claus d'ITrack)
+  currentPage: number = 0; // Pàgina actual
+  itemsPerPage: number = 10; // Número d'elements per pàgina
+  totalPages: number = 0; // Total de pàgines
+
+  // Filtres
+  filters = {
+    track_name: '',
+    artist_name: '',
+    language: '',
+    popularity: 0
+  };
+
+  availableLanguages: string[] = []; // Llista d'idiomes disponibles
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.getTracks().subscribe(tracks => {
       this.data = tracks;
-      if (this.data.length > 0) {
-        this.headers = Object.keys(this.data[0]) as (keyof ITrack)[];
-      }
-      this.totalPages = Math.ceil(this.data.length / this.itemsPerPage);
+      this.filteredData = [...this.data]; // Inicialment, totes les dades es mostren
+      this.headers = Object.keys(this.data[0] || {}) as (keyof ITrack)[];
+      this.availableLanguages = Array.from(new Set(this.data.map(track => track.language))).sort();
+      this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
       this.loadPage();
     });
   }
@@ -31,7 +42,7 @@ export class DataTableComponent implements OnInit {
   loadPage(): void {
     const start = this.currentPage * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.currentData = this.data.slice(start, end);
+    this.currentData = this.filteredData.slice(start, end);
   }
 
   nextPage(): void {
@@ -48,15 +59,40 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  isArray(value: any): boolean {
-    return Array.isArray(value);
-  }
-
   getDisplayValue(value: any): string {
     if (Array.isArray(value)) {
       return value.join(', ');
     }
     return value !== null && value !== undefined ? value.toString() : '';
   }
-  
+
+  applyFilters(): void {
+    this.filteredData = this.data.filter(track => {
+      const matchesTrackName = track.track_name.toLowerCase().includes(this.filters.track_name.toLowerCase());
+      const matchesArtistName = track.artist_name.some(artist =>
+        artist.toLowerCase().includes(this.filters.artist_name.toLowerCase())
+      );
+      const matchesLanguage = this.filters.language ? track.language === this.filters.language : true;
+      const matchesPopularity = track.popularity >= this.filters.popularity;
+
+      return matchesTrackName && matchesArtistName && matchesLanguage && matchesPopularity;
+    });
+
+    this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+    this.currentPage = 0;
+    this.loadPage();
+  }
+
+  clearFilters(): void {
+    this.filters = {
+      track_name: '',
+      artist_name: '',
+      language: '',
+      popularity: 0
+    };
+    this.filteredData = [...this.data];
+    this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+    this.currentPage = 0;
+    this.loadPage();
+  }
 }

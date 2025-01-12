@@ -26,6 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { DataTableComponent } from './data-table/data-table.component';
+import { FormsModule } from '@angular/forms'; // Importa FormsModule
+
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { DataTableComponent } from './data-table/data-table.component';
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
