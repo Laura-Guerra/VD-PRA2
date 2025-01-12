@@ -25,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     ContactComponent,
     CardsDetailComponent,
-    GobackButtonComponent
+    GobackButtonComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,

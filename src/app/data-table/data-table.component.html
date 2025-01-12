@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="content-wrapper">
+      <h1>Tabla de Tracks</h1>
+      <div class="content-section">
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let header of headers">{{ header }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let track of currentData">
+              <td *ngFor="let key of headers">
+                {{ getDisplayValue(track[key]) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+          <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

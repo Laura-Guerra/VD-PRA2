@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'basic-site';
 
   constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
-    translate.use('en');
+    translate.setDefaultLang('ca');
+    translate.use('ca');
   }
 }

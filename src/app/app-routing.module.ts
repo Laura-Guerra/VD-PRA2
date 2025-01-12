@@ -1,3 +1,4 @@
+import { DataTableComponent } from './data-table/data-table.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CardsDetailComponent } from './cards-detail/cards-detail.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'cardgrid', component: CardsLayoutComponent},
   {path: 'carddetail', component: CardsDetailComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'data', component: DataTableComponent},
   {path: '**', component: ErrorComponent}
 ];
 
