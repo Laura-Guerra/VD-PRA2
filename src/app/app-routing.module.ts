@@ -6,10 +6,7 @@ import { CardsLayoutComponent } from './cards-layout/cards-layout.component';
 import { ContactComponent } from './contact/contact.component';
 import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/home.component';
-import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
-import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
-import { ViolinChartComponent } from './violin-chart/violin-chart.component';
-import { FilterMenuComponent } from './filter-menu/filter-menu.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,10 +15,7 @@ const routes: Routes = [
   {path: 'carddetail', component: CardsDetailComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'data', component: DataTableComponent},
-  {path: 'bubble-chart', component: BubbleChartComponent},
-  {path: 'stacked', component: StackedBarChartComponent},
-  {path: 'violin', component: ViolinChartComponent},
-  {path: 'filter', component: FilterMenuComponent},
+  {path: 'bar-chart', component: BarChartComponent},
   {path: '**', component: ErrorComponent},
 ];
 

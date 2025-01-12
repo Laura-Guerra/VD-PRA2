@@ -31,6 +31,7 @@ import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
 import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
 import { ViolinChartComponent } from './violin-chart/violin-chart.component';
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
     StackedBarChartComponent,
     ViolinChartComponent,
     FilterMenuComponent,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
