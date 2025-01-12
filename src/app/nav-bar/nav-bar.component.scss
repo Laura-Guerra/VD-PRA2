@@ -1,0 +1,84 @@
+@import '../../styles.scss';
+
+.mat-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    background-color: $color-grey;
+    .mat-toolbar-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-family: $font-mono!important;
+        .logo {
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+            cursor: pointer;
+        }
+        .menus {
+            display: flex;
+            .lang-menu {
+                display: flex;
+                align-items: center;
+                border: 2px solid $color-black;
+                border-radius: 10px;
+                padding-left: 10px;
+                p {
+                    text-transform: uppercase;
+                    font-weight: 700;
+                    font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
+                }
+                mat-icon {
+                    font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
+                }
+                &:hover {
+                    background-color: $color-black;
+                    color: #fff;
+                    font-weight: 700;
+                }
+            }
+            .hamburger-menu {
+                display: flex;
+                align-items: center;
+                border: 2px solid $color-black;
+                border-radius: 10px;
+                margin-left: 10px;
+                button {
+                    height: auto;
+                    mat-icon {
+                        font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
+                    }
+                }
+                &:hover {
+                    background-color: $color-black;
+                    color: #fff;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 768px){
+    .mat-toolbar {
+        .mat-toolbar-wrapper {
+            flex-direction: row;
+            width: 85%;
+            justify-content: space-between;
+            .menus {
+                .lang-menu {
+                    border: 3px solid $color-black;
+                }
+                .hamburger-menu {
+                    border: 3px solid $color-black;
+                }
+            }
+        }
+    }
+}

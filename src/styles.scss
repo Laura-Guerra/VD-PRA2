@@ -1,0 +1,30 @@
+/* Global styles */
+
+// Color
+$color-black: #050505;
+$color-grey: #F5F5F5;
+
+// Font
+$font-mono: 'Space Mono', monospace;
+$font-ubuntu: 'Ubuntu', sans-serif;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    margin: 0;
+    font-family: $font-mono!important;
+}
+
+// Special style using ::ng-deep so it overrides Angular Material menu styles
+::ng-deep .menu-style {
+    font-family: $font-mono;
+    font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
+}

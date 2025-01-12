@@ -1,0 +1,38 @@
+{
+    "home": {
+        "title": "Bienvenido a esta página básica",
+        "subtitle": "qué es esto?",
+        "content-text": "Estás viendo un esquema básico de la web, piensa en él como si fuera la plantilla de un futuro sitio web. Tiene mucho sentido, ¿verdad? Trabajando con esta plantilla (que he mejorado cuidadosamente durante algún tiempo) puedo crear sitios web de calidad con algunas funcionalidades muy chulas :)",
+        "contact-button": "Contáctanos",
+        "section-title": "ejemplo-carta",
+        "seemore-button": "Ver más"
+    },
+    "cards-layout": {
+        "title": "título",
+        "filter-button": "Opción",
+        "section-title": "ejemplo-carta"
+    },
+    "cards-detail": {
+        "title": "título",
+        "subtitle": "Esto es el detalle de la carta",
+        "detail-content": "[ES] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "stat-header": "Estadística",
+        "stat-value": "Valor"
+    },
+    "contact": {
+        "title": "Contáctanos",
+        "subtitle": "Nos encantará recibir noticias tuyas :)",
+        "name-input": "Nombre",
+        "lastname-input": "Apellido",
+        "subjet-input": "Qué necesitas?",
+        "subjet-placeholder": "Ej. Necesito una web como esta!",
+        "message-input": "Deja tu mensaje",
+        "message-placeholder": "Ej. Me ha encantado esta web!",
+        "button-form": "Enviar formulario"
+    },
+    "error": {
+        "title": "Página no encontrada",
+        "subtitle": "Lo sentimos mucho :(",
+        "backhome-button": "Volver a la home"
+    }
+}

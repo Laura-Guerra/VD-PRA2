@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="content-wrapper">
+        <h1>&lt; {{ 'contact.title' | translate }} / &gt;</h1>
+        <h2>{{ 'contact.subtitle' | translate }}</h2>
+        <img src="../../assets/img/contact.png" alt="" class="contact-img">
+        <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>{{ 'contact.name-input' | translate }}</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>{{ 'contact.lastname-input' | translate }}</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>{{ 'contact.subjet-input' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'contact.subjet-placeholder' | translate }}">
+            </mat-form-field>
+        
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>{{ 'contact.message-input' | translate }}</mat-label>
+                <textarea matInput placeholder="{{ 'contact.message-placeholder' | translate }}"></textarea>
+            </mat-form-field>
+        </form>
+        <button>{{ 'contact.button-form' | translate }}</button>
+    </div>
+</div>

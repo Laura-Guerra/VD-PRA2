@@ -1,0 +1,46 @@
+<mat-toolbar>
+    <div class="mat-toolbar-wrapper">
+        <div class="logo">
+            <p routerLink="">Basic layout</p>
+        </div>
+        <div class="menus">
+            <div class="lang-menu">
+                <p>Lang</p>
+                <button mat-icon-button [matMenuTriggerFor]="langmenu">
+                    <mat-icon>language</mat-icon>
+                </button>
+                <mat-menu #langmenu="matMenu" xPosition="before">
+                <button mat-menu-item class="menu-style" (click)="useLanguage('en')">
+                    <span>EN</span>
+                </button>
+                <button mat-menu-item class="menu-style" (click)="useLanguage('es')">
+                    <span button>ES</span>
+                </button>
+                </mat-menu>
+            </div>
+            <div class="hamburger-menu">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button routerLink="home" mat-menu-item class="menu-style">
+                        <span>Home</span>
+                    </button>
+                <button routerLink="cardgrid" mat-menu-item class="menu-style">
+                    <span>Basic cards</span>
+                </button>
+                <button routerLink="carddetail" mat-menu-item class="menu-style">
+                    <span>Basic detail</span>
+                </button>
+                <button routerLink="contact" mat-menu-item class="menu-style">
+                    <span>Contact</span>
+                </button>
+                <button routerLink="**" mat-menu-item class="menu-style">
+                    <span>Error page</span>
+                </button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>
+

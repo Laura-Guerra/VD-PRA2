@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="content-wrapper">
+        <h1>&lt; {{ 'cards-detail.title' | translate }} / &gt;</h1>
+        <h2>"{{ 'cards-detail.subtitle' | translate }}"</h2>
+        <div class="main-detail">
+            <div class="img-detail"></div>
+            <div class="text-detail">
+                <p>
+                    {{ 'cards-detail.detail-content' | translate }}
+                </p>
+            </div>
+        </div>
+        <div class="stats-detail">
+            <div class="stat" *ngFor="let num of [1, 2, 3]">
+                <h3 class="stat-header">{{ 'cards-detail.stat-header' | translate }} {{num}}</h3>
+                <p class="stat-value">{{ 'cards-detail.stat-value' | translate }} {{num}}</p>
+            </div>
+        </div>
+    </div>
+</div>

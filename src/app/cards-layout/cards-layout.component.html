@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="content-wrapper">
+        <h1>&lt; {{ 'cards-layout.title' | translate }} / &gt;</h1>
+        <div class="filter-buttons">
+            <a *ngFor="let num of [1, 2, 3, 4, 5]">{{ 'cards-layout.filter-button' | translate }} {{num}}</a>
+        </div>
+        <h2>&lt; {{ 'cards-layout.section-title' | translate }} / &gt;</h2>
+        <div class="card-grid">
+            <div class="card" *ngFor="let num of [1, 2, 3, 4]"></div>
+        </div>
+        <div class="divider"></div>
+        <h2>&lt; {{ 'cards-layout.section-title' | translate }} / &gt;</h2>
+        <div class="card-grid">
+            <div class="card" *ngFor="let num of [1, 2, 3, 4]"></div>
+        </div>
+    </div>
+</div>

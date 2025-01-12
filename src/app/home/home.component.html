@@ -1,0 +1,23 @@
+    <div class="container">
+        <div class="content-wrapper">
+            <h1>&lt; {{ 'home.title' | translate }} / &gt;</h1>
+            <div class="content-section">
+                <h2> {{ 'home.subtitle' | translate }}</h2>
+                <div class="image-paragraph">
+                    <div class="content-image"></div>
+                    <p class="content-text">
+                        {{ 'home.content-text' | translate }}
+                    </p>
+                    <button routerLink="contact">{{ 'home.contact-button' | translate }}</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="content-section">
+                <h2>&lt; {{ 'home.section-title' | translate }} / &gt;</h2>
+                <div class="card-grid">
+                    <div class="card" *ngFor="let num of [1, 2, 3, 4]"></div>
+                </div>
+                <button routerLink="cardgrid">{{ 'home.seemore-button' | translate }}</button>
+            </div>
+        </div>
+    </div>
