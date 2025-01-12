@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { ITrack } from '../interfaces/track.interface';
 
 @Component({
-  selector: 'app-bubble-chart',
+  selector: 'bubble-chart',
   templateUrl: './bubble-chart.component.html',
   styleUrls: ['./bubble-chart.component.scss']
 })
@@ -35,19 +35,28 @@ export class BubbleChartComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getTracks().subscribe((tracks) => {
       this.data = tracks;
-
-      // Agrupar i ordenar els gèneres alfabèticament
-      this.genres = Array.from(new Set(this.data.map((d) => d.track_genre))).sort();
-
-      // Inicialment, mostra tots els gèneres
-      this.filteredGenres = [...this.genres];
-
-      // Selecciona automàticament els primers 5 gèneres
+  
+      // Agrupar gèneres per freqüència i ordenar
+      const genreCounts = this.data.reduce((acc, track) => {
+        acc[track.track_genre] = (acc[track.track_genre] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+  
+      // Ordenar gèneres per freqüència descendent
+      this.genres = Object.entries(genreCounts)
+        .sort((a, b) => b[1] - a[1]) // Ordenar per comptador descendent
+        .map(([genre]) => genre);
+  
+      // Seleccionar els 5 primers
       this.selectedGenres = this.genres.slice(0, 5);
-
+  
+      // Mostrar tots els gèneres a la llista filtrada
+      this.filteredGenres = [...this.genres];
+  
       this.applyFilters();
     });
   }
+  
 
   filterGenres(): void {
     this.filteredGenres = this.genres.filter((genre) =>
@@ -70,6 +79,7 @@ export class BubbleChartComponent implements OnInit {
     );
 
     this.createCharts();
+    this.createLegend()
   }
 
   createCharts(): void {
@@ -145,14 +155,63 @@ export class BubbleChartComponent implements OnInit {
 
   toggleGenre(genre: string, event: Event): void {
     const input = event.target as HTMLInputElement;
+  
     if (input.checked) {
-      this.selectedGenres.push(genre);
+      if (this.selectedGenres.length >= 5) {
+        // Mostra un avís si ja hi ha 5 gèneres seleccionats
+        alert('Només pots seleccionar fins a 5 gèneres.');
+        input.checked = false; // Desmarca el checkbox
+      } else {
+        this.selectedGenres.push(genre); // Afegeix el gènere seleccionat
+      }
     } else {
+      // Elimina el gènere deseleccionat
       this.selectedGenres = this.selectedGenres.filter((g) => g !== genre);
     }
-    this.applyFilters();
+  
+    this.applyFilters(); // Actualitza les gràfiques i la llegenda
   }
+  
   toggleFilters(): void {
-    this.showFilters = !this.showFilters;
-  }
+  this.showFilters = !this.showFilters;
+}
+
+
+createLegend(): void {
+  const container = d3.select('.legend');
+  container.selectAll('*').remove(); // Elimina llegendes existents
+
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10); // Escala de colors
+  const displayedGenres = Array.from(new Set(this.filteredData.map((d) => d.track_genre))); // Gèneres únics de les dades filtrades
+
+  const legend = container
+    .append('svg')
+    .attr('width', 300)
+    .attr('height', displayedGenres.length * 30) // Ajusta l'alçada segons el nombre de gèneres
+    .selectAll('.legend-item')
+    .data(displayedGenres)
+    .enter()
+    .append('g')
+    .attr('class', 'legend-item')
+    .attr('transform', (d, i) => `translate(0, ${i * 25})`);
+
+  // Quadrat de color
+  legend
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 18)
+    .attr('height', 18)
+    .attr('fill', (d) => colorScale(d));
+
+  // Text al costat
+  legend
+    .append('text')
+    .attr('x', 25)
+    .attr('y', 14) // Centrat verticalment amb el rectangle
+    .attr('font-size', '12px')
+    .text((d) => d);
+}
+
+
 }

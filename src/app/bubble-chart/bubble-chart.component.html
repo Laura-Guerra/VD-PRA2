@@ -4,6 +4,10 @@
       {{ showFilters ? 'Amaga Filtres' : 'Mostra Filtres' }}
     </button>
   </div>
+  <p class="content-text">
+    Aquesta gràfica analitza com es relacionen diverses característiques musicals, com la dansabilitat, 
+    l'energia i la valència, segons els gèneres seleccionats.
+</p>
   
   <div class="filters" *ngIf="showFilters">
     <div class="filter-section">
@@ -51,5 +55,5 @@
         <div class="chart"></div>
       </div>
     </div>
-  </div>
-  
+    <div class="legend"></div>
+  </div> 
