@@ -1,52 +1,18 @@
 <div class="header">
     <h2>&lt; Comparació de característiques / &gt;</h2>
-    <button class="toggle-filters" (click)="toggleFilters()">
-      {{ showFilters ? 'Amaga Filtres' : 'Mostra Filtres' }}
-    </button>
   </div>
-  <p class="content-text">
-    Aquesta gràfica analitza com es relacionen diverses característiques musicals, com la dansabilitat, 
-    l'energia i la valència, segons els gèneres seleccionats.
-</p>
-  
-  <div class="filters" *ngIf="showFilters">
-    <div class="filter-section">
-      <label for="search-genres">Cerca gèneres:</label>
-      <input
-        id="search-genres"
-        type="text"
-        [(ngModel)]="genreSearch"
-        (input)="filterGenres()"
-        placeholder="Escriu per buscar..."
-      />
-    </div>
-  
-    <div class="filter-section">
-      <h3>Gèneres disponibles</h3>
-      <div class="genre-checkboxes">
-        <label *ngFor="let genre of filteredGenres">
-          <input
-            type="checkbox"
-            [checked]="selectedGenres.includes(genre)"
-            (change)="toggleGenre(genre, $event)"
-          />
-          {{ genre }}
-        </label>
-      </div>
-    </div>
-  
-    <div class="filter-section">
-      <label>
-        Popularitat mínima:
-        <input
-          type="number"
-          [(ngModel)]="filters.popularity"
-          (change)="applyFilters()"
-          placeholder="50"
-        />
-      </label>
-    </div>
-  </div>
+  <p>
+    Les <strong>gràfiques de bombolles</strong> són útils per analitzar la relació entre
+    dues característiques musicals. Cada bombolla representa una cançó, amb la seva posició
+    determinada per les puntuacions en les dues característiques seleccionades. A més, el radi
+    de cada bombolla indica la popularitat de la cançó, permetent identificar patrons i
+    tendències musicals.
+  </p>
+
+  <p>
+    Aquest tipus de gràfiques ajuda a identificar patrons, com ara quins gèneres tendeixen a tenir
+    una alta dansabilitat o energia, i com aquestes característiques varien entre gèneres.
+  </p>
   
   <div class="charts">
     <div class="chart-grid">
@@ -56,4 +22,5 @@
       </div>
     </div>
     <div class="legend"></div>
-  </div> 
+  </div>
+  

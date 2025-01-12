@@ -1,0 +1,51 @@
+.chart-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px; /* Espai entre la gràfica i el text */
+  margin: 20px auto;
+  max-width: 1400px; /* Limitar la mida màxima de l'àrea total */
+}
+
+.chart-column {
+  flex: 3; /* La columna amb la gràfica ocupa més espai */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-container {
+  width: 100%; /* Ocupa tot l'espai disponible dins la columna */
+  max-width: 700px; /* Redueix una mica l'amplada màxima */
+  height: 400px;
+}
+
+.chart-description {
+  flex: 2; /* La columna de text ocupa més espai */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.chart-description h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.chart-description p {
+  margin-bottom: 15px;
+}
+
+.chart-description strong {
+  color: #333;
+}
+
+.chart-description em {
+  font-style: italic;
+  color: #555;
+}

@@ -1,0 +1,57 @@
+.header {
+  text-align: right;
+
+  .toggle-filters {
+    border: 2px solid #000;
+    border-radius: 10px;
+    background-color: transparent;
+    font-size: 14px;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #000;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
+.filters {
+  position: fixed;
+  top: calc(10vh + 50px); /* Just sota el botó */
+  right: 20px;
+  z-index: 1000;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+
+  .filter-section {
+    margin-bottom: 20px;
+
+    input[type='text'],
+    input[type='number'] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .genre-checkboxes {
+      max-height: 150px;
+      overflow-y: auto;
+
+      label {
+        font-size: 14px;
+
+        input {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

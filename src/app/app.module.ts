@@ -28,6 +28,9 @@ import { MatInputModule } from '@angular/material/input';
 import { DataTableComponent } from './data-table/data-table.component';
 import { FormsModule } from '@angular/forms';
 import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
+import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
+import { ViolinChartComponent } from './violin-chart/violin-chart.component';
+import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
     GobackButtonComponent,
     DataTableComponent,
     BubbleChartComponent,
+    StackedBarChartComponent,
+    ViolinChartComponent,
+    FilterMenuComponent,
   ],
   imports: [
     BrowserModule,

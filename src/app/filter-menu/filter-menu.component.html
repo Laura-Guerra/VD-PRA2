@@ -1,0 +1,38 @@
+<div class="filters">
+  <div class="filter-section">
+    <label for="search-genres">Cerca gèneres:</label>
+    <input
+      id="search-genres"
+      type="text"
+      [(ngModel)]="genreSearch"
+      (input)="filterGenres()"
+      placeholder="Escriu per buscar..."
+    />
+  </div>
+
+  <div class="filter-section">
+    <h3>Gèneres disponibles</h3>
+    <div class="genre-checkboxes">
+      <label *ngFor="let genre of filteredGenres">
+        <input
+          type="checkbox"
+          [checked]="selectedGenres.includes(genre)"
+          (change)="toggleGenre(genre, $event)"
+        />
+        {{ genre }}
+      </label>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <label>
+      Popularitat mínima:
+      <input
+        type="number"
+        [(ngModel)]="popularity"
+        (change)="emitFilters()"
+        placeholder="50"
+      />
+    </label>
+  </div>
+</div>

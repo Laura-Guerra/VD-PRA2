@@ -1,23 +1,39 @@
-    <div class="container">
-        <div class="content-wrapper">
-            <h1>&lt; {{ 'home.title' | translate }} / &gt;</h1>
-            <div class="content-section">
-                <h2> {{ 'home.subtitle' | translate }}</h2>
-                <div class="image-paragraph">
-                    <div class="content-image"></div>
-                    <p class="content-text">
-                        {{ 'home.content-text' | translate }}
-                    </p>
-                    <button routerLink="contact">{{ 'home.contact-button' | translate }}</button>
-                </div>
-            </div>
-            <div class="divider"></div>
-            <div class="content-section">
-                <h2>&lt; {{ 'home.section-title' | translate }} / &gt;</h2>
-                <div class="card-grid">
-                    <div class="card" *ngFor="let num of [1, 2, 3, 4]"></div>
-                </div>
-                <button routerLink="cardgrid">{{ 'home.seemore-button' | translate }}</button>
-            </div>
-        </div>
+<div class="container">
+    <button class="floating-toggle-filters" (click)="toggleFilters()">
+      {{ showFilters ? 'Amaga Filtres' : 'Mostra Filtres' }}
+    </button>
+  
+    <div [hidden]="!showFilters">
+      <app-filter-menu
+        [selectedGenres]="selectedGenres"
+        (filtersChanged)="updateFilters($event)"
+      ></app-filter-menu>
     </div>
+  
+    <div class="content-wrapper">
+      <h1>&lt; {{ 'home.title' | translate }} / &gt;</h1>
+      <div class="content-section">
+        <h2>{{ 'home.subtitle' | translate }}</h2>
+        <p class="content-text">
+          La música és un llenguatge universal que ens connecta a través d'emocions, ritmes i melodies. Però, què fa que
+          una cançó sigui popular? Quines diferències hi ha entre els gèneres musicals? I com influeixen les
+          característiques musicals en les nostres preferències?
+        </p>
+      </div>
+      <div class="divider"></div>
+      <div class="content-section">
+        <bubble-chart [genres]="selectedGenres" [popularity]="popularity" [data]="data"></bubble-chart>
+      </div>
+    
+    <div class="content-section">
+        <violin-chart
+          [genres]="selectedGenres"
+          [popularity]="popularity"
+          [data]="data"
+        ></violin-chart>
+      </div>
+    </div>
+
+      
+  </div>
+  
