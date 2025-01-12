@@ -1,26 +1,22 @@
 export interface ITrack {
-    track_id: string;             
-    track_name: string;           
-    artist_name: string[];
-    year: number;                 
-    popularity: number;           
-    artwork_url: string;          
-    album_name: string;           
-    acousticness: number;         
-    danceability: number;         
-    duration_ms: number;          
-    energy: number;               
-    instrumentalness: number;     
-    key: number;                  
-    liveness: number;             
-    loudness: number;             
-    mode: number;                 
-    speechiness: number;          
-    tempo: number;                
-    time_signature: number;       
-    valence: number;              
-    track_url: string;            
-    language: string;             
-    featuring: boolean;            
-    genres: string[];
-  }
+  track_id: string;
+  track_name: string;
+  artist_name: string[];
+  album_name: string;
+  popularity: number;
+  duration_ms: number;
+  explicit: boolean;
+  danceability: number;
+  energy: number;
+  key: number;
+  loudness: number;
+  mode: number;
+  speechiness: number;
+  acousticness: number;
+  instrumentalness: number;
+  liveness: number;
+  valence: number;
+  tempo: number;
+  time_signature: number;
+  track_genre: string;
+}

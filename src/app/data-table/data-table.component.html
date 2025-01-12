@@ -1,6 +1,6 @@
 <div class="container">
   <div class="content-wrapper">
-    <h1>Tracks</h1>
+    <h1> &lt; CANÇONS / &gt;</h1>
     <div class="content-section">
 
       <!-- Formulari de filtres -->
@@ -14,10 +14,10 @@
           <input type="text" [(ngModel)]="filters.artist_name" placeholder="Cerca per artista">
         </label>
         <label>
-          Idioma:
-          <select [(ngModel)]="filters.language">
+          Gènere:
+          <select [(ngModel)]="filters.track_genre">
             <option value="">Tots</option>
-            <option *ngFor="let lang of availableLanguages" [value]="lang">{{ lang }}</option>
+            <option *ngFor="let gen of availableTrackGenre" [value]="gen">{{ gen }}</option>
           </select>
         </label>
         <label>
@@ -32,14 +32,32 @@
       <table>
         <thead>
           <tr>
-            <th *ngFor="let header of headers">{{ header }}</th>
+            <th>Nom del Track</th>
+            <th>Artista</th>
+            <th>Àlbum</th>
+            <th>Gènere</th>
+            <th>Característiques</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let track of currentData">
-            <td *ngFor="let key of headers">
-              {{ getDisplayValue(track[key]) }}
-            </td>
+            <td>{{ track.track_name }}</td>
+            <td>{{ track.artist_name.join(', ') }}</td>
+            <td>{{ track.album_name }}</td>
+            <td>{{ track.track_genre }}</td>
+            <td
+            (mouseenter)="showRadarChart(track)"
+            (mouseleave)="hideRadarChart()"
+            class="hover-cell"
+            >
+              <span>Veure</span>
+              <div
+                class="radar-chart-container"
+                [ngClass]="{ 'visible': hoveredTrack === track.track_id, 'hidden': hoveredTrack !== track.track_id }"
+              >
+              <div id="radar-chart-{{ track.track_id }}" class="radar-chart"></div>
+              </div>
+            </td>                    
           </tr>
         </tbody>
       </table>

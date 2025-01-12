@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { ITrack } from '../interfaces/track.interface';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-data-table',
@@ -13,18 +14,20 @@ export class DataTableComponent implements OnInit {
   currentData: ITrack[] = []; // Dades visibles a la pàgina actual
   headers: (keyof ITrack)[] = []; // Caps de taula (claus d'ITrack)
   currentPage: number = 0; // Pàgina actual
-  itemsPerPage: number = 10; // Número d'elements per pàgina
+  itemsPerPage: number = 100; // Número d'elements per pàgina
   totalPages: number = 0; // Total de pàgines
+
+  hoveredTrack: string | null = null; // ID del track que està sent mostrat en el radar chart
 
   // Filtres
   filters = {
     track_name: '',
     artist_name: '',
-    language: '',
+    track_genre: '',
     popularity: 0
   };
 
-  availableLanguages: string[] = []; // Llista d'idiomes disponibles
+  availableTrackGenre: string[] = []; // Llista d'idiomes disponibles
 
   constructor(private dataService: DataService) {}
 
@@ -33,7 +36,7 @@ export class DataTableComponent implements OnInit {
       this.data = tracks;
       this.filteredData = [...this.data]; // Inicialment, totes les dades es mostren
       this.headers = Object.keys(this.data[0] || {}) as (keyof ITrack)[];
-      this.availableLanguages = Array.from(new Set(this.data.map(track => track.language))).sort();
+      this.availableTrackGenre = Array.from(new Set(this.data.map(track => track.track_genre))).sort();
       this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
       this.loadPage();
     });
@@ -72,10 +75,10 @@ export class DataTableComponent implements OnInit {
       const matchesArtistName = track.artist_name.some(artist =>
         artist.toLowerCase().includes(this.filters.artist_name.toLowerCase())
       );
-      const matchesLanguage = this.filters.language ? track.language === this.filters.language : true;
+      const matchesGenre = this.filters.track_genre ? track.track_genre === this.filters.track_genre : true;
       const matchesPopularity = track.popularity >= this.filters.popularity;
 
-      return matchesTrackName && matchesArtistName && matchesLanguage && matchesPopularity;
+      return matchesTrackName && matchesArtistName && matchesGenre && matchesPopularity;
     });
 
     this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
@@ -87,7 +90,7 @@ export class DataTableComponent implements OnInit {
     this.filters = {
       track_name: '',
       artist_name: '',
-      language: '',
+      track_genre: '',
       popularity: 0
     };
     this.filteredData = [...this.data];
@@ -95,4 +98,116 @@ export class DataTableComponent implements OnInit {
     this.currentPage = 0;
     this.loadPage();
   }
+
+  showRadarChart(track: ITrack): void {
+    console.log('Hover activat per:', track.track_name);
+    console.log('ID del contenidor:', `#radar-chart-${track.track_id}`);
+    this.hoveredTrack = track.track_id; // Estableix l'ID del track actiu
+    setTimeout(() => {
+      const container = d3.select(`#radar-chart-${track.track_id}`);
+      console.log('Contenidor radar-chart:', container.node());
+      if (!container.empty()) {
+        this.drawRadarChart(track); // Només dibuixa si el contenidor existeix
+      }
+    }, 0); // Retard curt per assegurar que el DOM està llest
+  }
+  
+  hideRadarChart(): void {
+    this.hoveredTrack = null; // Amaga el radar chart
+    d3.select('#radar-chart').selectAll('*').remove(); // Elimina el contingut del gràfic
+  }
+  
+
+  // Dibuixa el radar chart
+  private drawRadarChart(track: ITrack): void {
+    const container = d3.select(`#radar-chart-${track.track_id}`);
+    console.log('Contenidor radar-chart:', container.node());
+    if (!container.node()) {
+      console.error(`El contenidor #radar-chart-${track.track_id} no existeix.`);
+      return; // Atura si el contenidor no està disponible
+    }
+    container.selectAll('*').remove();
+  
+    const data = [
+      { axis: 'Energia', value: track.energy },
+      { axis: 'Dansabilitat', value: track.danceability },
+      { axis: 'València', value: track.valence },
+      { axis: 'Acústica', value: track.acousticness },
+      { axis: 'Parla', value: track.speechiness }
+    ];
+    console.log('Dades del radar chart:', data);
+  
+    const margin = 50; // MARGE EXTRA
+    const width = 300; // Amplada total del contenidor
+    const height = 300; // Alçada total del contenidor
+    const radius = Math.min(width, height) / 2 - margin; // Ajustem el radi per al marge
+  
+    const svg = container
+      .append('svg')
+      .attr('width', width + margin * 2) // Amplada amb marge
+      .attr('height', height + margin * 2) // Alçada amb marge
+      .append('g')
+      .attr('transform', `translate(${(width + margin * 2) / 2}, ${(height + margin * 2) / 2})`); // Centrat amb marge
+  
+    const rScale = d3.scaleLinear().range([0, radius]).domain([0, 1]);
+  
+    svg
+      .selectAll('.levels')
+      .data(d3.range(1, 6).reverse())
+      .enter()
+      .append('circle')
+      .attr('class', 'gridCircle')
+      .attr('r', (d) => (radius / 5) * d)
+      .style('fill', '#CDCDCD')
+      .style('stroke', '#CDCDCD')
+      .style('fill-opacity', 0.1);
+  
+    const angleSlice = (Math.PI * 2) / data.length;
+  
+    const radarLine = d3
+      .lineRadial<{ axis: string; value: number }>()
+      .radius((d) => rScale(d.value))
+      .angle((d, i) => i * angleSlice);
+  
+    svg
+      .append('path')
+      .datum(data)
+      .attr('class', 'radarArea')
+      .attr('d', radarLine as any)
+      .style('fill', 'blue')
+      .style('fill-opacity', 0.7);
+  
+    // Afegir eixos
+    const axisGrid = svg.append('g').attr('class', 'axisWrapper');
+  
+    axisGrid
+      .selectAll('.axis')
+      .data(data)
+      .enter()
+      .append('line')
+      .attr('class', 'axisLine')
+      .attr('x1', 0)
+      .attr('y1', 0)
+      .attr('x2', (d, i) => rScale(1) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('y2', (d, i) => rScale(1) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('stroke', 'black')
+      .style('stroke-width', '2px');
+  
+    // Afegir etiquetes als eixos
+    axisGrid
+      .selectAll('.axisLabel')
+      .data(data)
+      .enter()
+      .append('text')
+      .attr('class', 'axisLabel')
+      .attr('x', (d, i) => rScale(1.1) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('y', (d, i) => rScale(1.1) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('font-size', '12px')
+      .style('text-anchor', 'middle')
+      .text((d) => d.axis);
+  }
+  
+  
+
+
 }

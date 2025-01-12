@@ -1,0 +1,55 @@
+<div class="header">
+    <h2>&lt; Comparació de característiques / &gt;</h2>
+    <button class="toggle-filters" (click)="toggleFilters()">
+      {{ showFilters ? 'Amaga Filtres' : 'Mostra Filtres' }}
+    </button>
+  </div>
+  
+  <div class="filters" *ngIf="showFilters">
+    <div class="filter-section">
+      <label for="search-genres">Cerca gèneres:</label>
+      <input
+        id="search-genres"
+        type="text"
+        [(ngModel)]="genreSearch"
+        (input)="filterGenres()"
+        placeholder="Escriu per buscar..."
+      />
+    </div>
+  
+    <div class="filter-section">
+      <h3>Gèneres disponibles</h3>
+      <div class="genre-checkboxes">
+        <label *ngFor="let genre of filteredGenres">
+          <input
+            type="checkbox"
+            [checked]="selectedGenres.includes(genre)"
+            (change)="toggleGenre(genre, $event)"
+          />
+          {{ genre }}
+        </label>
+      </div>
+    </div>
+  
+    <div class="filter-section">
+      <label>
+        Popularitat mínima:
+        <input
+          type="number"
+          [(ngModel)]="filters.popularity"
+          (change)="applyFilters()"
+          placeholder="50"
+        />
+      </label>
+    </div>
+  </div>
+  
+  <div class="charts">
+    <div class="chart-grid">
+      <div class="chart-container" *ngFor="let pair of characteristicPairs">
+        <h3>{{ pair.x }} vs {{ pair.y }}</h3>
+        <div class="chart"></div>
+      </div>
+    </div>
+  </div>
+  

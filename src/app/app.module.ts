@@ -26,7 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { DataTableComponent } from './data-table/data-table.component';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { FormsModule } from '@angular/forms';
+import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule
     ContactComponent,
     CardsDetailComponent,
     GobackButtonComponent,
-    DataTableComponent
+    DataTableComponent,
+    BubbleChartComponent,
   ],
   imports: [
     BrowserModule,

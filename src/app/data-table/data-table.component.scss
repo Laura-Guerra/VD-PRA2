@@ -168,3 +168,44 @@
     }
   }
   
+  .hover-cell {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+  
+    .radar-chart-container {
+      position: absolute;
+      width: 350px; /* Ampliem l'amplada */
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+  
+      /* Ajust per centrar i moure a l'esquerra */
+      top: -100px; /* Ajustem cap amunt */
+      left: -175px; /* Ajustem més cap a l'esquerra */
+  
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+      display: flex;
+      justify-content: center;
+  
+      &.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+  
+      &.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    svg {
+      margin: -50px;
+    }
+  }
+  
+  
+  
+  
+  
