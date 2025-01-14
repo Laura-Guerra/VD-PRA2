@@ -33,6 +33,7 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { AiUsageComponent } from './ai-usage/ai-usage.component';
 import { FontsComponent } from './fonts/fonts.component';
+import { HeatmapComponent } from './heatmap/heatmap.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { FontsComponent } from './fonts/fonts.component';
     BarChartComponent,
     AiUsageComponent,
     FontsComponent,
+    HeatmapComponent
   ],
   imports: [
     BrowserModule,

@@ -19,4 +19,5 @@ export interface ITrack {
   tempo: number;
   time_signature: number;
   track_genre: string;
+  artist_popularity?: number;
 }

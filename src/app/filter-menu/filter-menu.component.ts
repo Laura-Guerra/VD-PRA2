@@ -7,10 +7,11 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./filter-menu.component.scss']
 })
 export class FilterMenuComponent implements OnInit {
-  genres: string[] = [];
-  filteredGenres: string[] = [];
+  genres: { name: string; popularity: number }[] = [];
+  filteredGenres: { name: string; popularity: number }[] = [];
   genreSearch: string = '';
   popularity: number = 75;
+  sortOption: 'popularity' | 'alphabetical' = 'popularity';
 
   @Input() selectedGenres: string[] = [];
   @Output() filtersChanged = new EventEmitter<{ genres: string[]; popularity: number }>();
@@ -20,34 +21,68 @@ export class FilterMenuComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getTracks().subscribe((tracks) => {
       const genreCounts = tracks.reduce((acc, track) => {
-        acc[track.track_genre] = (acc[track.track_genre] || 0) + 1;
+        acc[track.track_genre] = acc[track.track_genre] || { count: 0, totalPopularity: 0 };
+        acc[track.track_genre].count += 1;
+        acc[track.track_genre].totalPopularity += track.popularity;
         return acc;
-      }, {} as Record<string, number>);
+      }, {} as Record<string, { count: number; totalPopularity: number }>);
   
       this.genres = Object.entries(genreCounts)
-        .sort(([, countA], [, countB]) => countB - countA)
-        .map(([genre]) => genre);
+        .map(([genre, data]) => ({
+          name: genre,
+          popularity: data.totalPopularity / data.count,
+        }))
+        .sort((a, b) => b.popularity - a.popularity);
   
-      // Si no hi ha gèneres seleccionats, selecciona els 5 primers
       if (this.selectedGenres.length === 0) {
-        this.selectedGenres = this.genres.slice(0, 5);
+        this.selectedGenres = this.genres.slice(0, 5).map((genre) => genre.name);
       }
   
-      this.filteredGenres = [...this.genres];
-      this.emitFilters(); // Emet els filtres actuals
+      this.filterGenres();
+      this.emitFilters();
     });
   }
   
+  
+
+  updateDefaultSelection(): void {
+    if (this.selectedGenres.length === 0) {
+      this.selectedGenres = this.genres
+        .slice(0, 5)
+        .map((genre) => genre.name);
+    }
+    this.emitFilters();
+  }
 
   filterGenres(): void {
-    this.filteredGenres = this.genres.filter((genre) =>
-      genre.toLowerCase().includes(this.genreSearch.toLowerCase())
+    const lowerSearch = this.genreSearch.toLowerCase();
+  
+    // Filtrar géneros que coincidan con la búsqueda
+    const unselectedGenres = this.genres.filter(
+      (genre) =>
+        !this.selectedGenres.includes(genre.name) &&
+        genre.name.toLowerCase().includes(lowerSearch)
     );
+  
+    // Ordenar géneros no seleccionados según la opción de orden actual
+    if (this.sortOption === 'popularity') {
+      unselectedGenres.sort((a, b) => b.popularity - a.popularity);
+    } else if (this.sortOption === 'alphabetical') {
+      unselectedGenres.sort((a, b) => a.name.localeCompare(b.name));
+    }
+  
+    // Combinar géneros seleccionados con los no seleccionados, manteniendo seleccionados arriba
+    this.filteredGenres = [
+      ...this.selectedGenres
+        .map((name) => this.genres.find((genre) => genre.name === name)!)
+        .filter((genre) => genre.name.toLowerCase().includes(lowerSearch)), // Aplicar búsqueda también a seleccionados
+      ...unselectedGenres,
+    ];
   }
 
   toggleGenre(genre: string, event: Event): void {
     const input = event.target as HTMLInputElement;
-
+  
     if (input.checked) {
       if (this.selectedGenres.length >= 5) {
         alert('Només pots seleccionar fins a 5 gèneres.');
@@ -58,14 +93,29 @@ export class FilterMenuComponent implements OnInit {
     } else {
       this.selectedGenres = this.selectedGenres.filter((g) => g !== genre);
     }
-
-    this.emitFilters();
+  
+    this.filterGenres(); // Reordenar la lista después de cambiar la selección
+    this.emitFilters();  // Emitir los filtros actualizados
   }
+  
 
   emitFilters(): void {
     this.filtersChanged.emit({
       genres: this.selectedGenres,
       popularity: this.popularity
     });
+  }
+
+  applySort(): void {
+    if (this.sortOption === 'popularity') {
+      this.filteredGenres.sort((a, b) => b.popularity - a.popularity);
+    } else if (this.sortOption === 'alphabetical') {
+      this.filteredGenres.sort((a, b) => a.name.localeCompare(b.name));
+    }
+  }
+
+  onSortChange(option: 'popularity' | 'alphabetical'): void {
+    this.sortOption = option;
+    this.applySort();
   }
 }

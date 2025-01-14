@@ -1,0 +1,13 @@
+<div class="heatmap-wrapper">
+  <div class="header">
+    <h2>
+      &lt; Heatmap: Popularitat de la Cançó vs. Popularitat de l'Artista / &gt;
+    </h2>
+  </div>
+  <div class="heatmap-content">
+    <div *ngFor="let genre of genres" class="heatmap-container">
+      <h3>{{ genre }}</h3>
+      <div [id]="'heatmap-' + genre" class="heatmap"></div>
+    </div>
+  </div>
+</div>

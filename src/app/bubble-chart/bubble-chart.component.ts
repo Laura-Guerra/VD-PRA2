@@ -82,7 +82,24 @@ export class BubbleChartComponent implements OnChanges {
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
-    // Eixos
+    const radiusScale = d3
+      .scaleSqrt()
+      .domain([0, 100]) // Popularitat entre 0 i 100
+      .range([2, 10]); // Radi de les bombolles
+
+    // Afegir el tooltip
+    const tooltip = d3
+      .select('body')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('position', 'absolute')
+      .style('background', '#fff')
+      .style('border', '1px solid #ccc')
+      .style('padding', '10px')
+      .style('border-radius', '5px')
+      .style('pointer-events', 'none')
+      .style('opacity', 0);
+
     svg
       .append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
@@ -105,7 +122,6 @@ export class BubbleChartComponent implements OnChanges {
       .style('text-anchor', 'start')
       .text(pair.y as string);
 
-    // Dibuixar les bombolles
     svg
       .selectAll('.bubble')
       .data(this.filteredData)
@@ -114,15 +130,28 @@ export class BubbleChartComponent implements OnChanges {
       .attr('class', 'bubble')
       .attr('cx', (d) => xScale(d[pair.x] as number))
       .attr('cy', (d) => yScale(d[pair.y] as number))
-      .attr('r', 5)
+      .attr('r', (d) => radiusScale(d.popularity))
       .style('fill', (d) => colorScale(d.track_genre))
-      .style('opacity', 0.8);
-  }
+      .style('opacity', 0.5)
+      .on('mouseover', (event, d) => {
+        tooltip
+          .html(
+            `<strong>Cançó:</strong> ${d.track_name}<br><strong>Popularitat:</strong> ${d.popularity}`
+          )
+          .style('left', `${event.pageX + 10}px`)
+          .style('top', `${event.pageY - 30}px`)
+          .style('opacity', 1);
+      })
+      .on('mouseout', () => {
+        tooltip.style('opacity', 0);
+      });
+}
+
 
 
   createLegend(): void {
     const container = d3.select('.legend');
-    container.selectAll('*').remove(); // Elimina llegendes existents
+    container.selectAll('*').remove();
   
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10); // Escala de colors
     const displayedGenres = Array.from(new Set(this.filteredData.map((d) => d.track_genre))); // Gèneres únics de les dades filtrades
@@ -130,7 +159,7 @@ export class BubbleChartComponent implements OnChanges {
     const legend = container
       .append('svg')
       .attr('width', 300)
-      .attr('height', displayedGenres.length * 30) // Ajusta l'alçada segons el nombre de gèneres
+      .attr('height', displayedGenres.length * 30)
       .selectAll('.legend-item')
       .data(displayedGenres)
       .enter()
@@ -138,7 +167,6 @@ export class BubbleChartComponent implements OnChanges {
       .attr('class', 'legend-item')
       .attr('transform', (d, i) => `translate(0, ${i * 25})`);
   
-    // Quadrat de color
     legend
       .append('rect')
       .attr('x', 0)
@@ -147,11 +175,10 @@ export class BubbleChartComponent implements OnChanges {
       .attr('height', 18)
       .attr('fill', (d) => colorScale(d));
   
-    // Text al costat
     legend
       .append('text')
       .attr('x', 25)
-      .attr('y', 14) // Centrat verticalment amb el rectangle
+      .attr('y', 14)
       .attr('font-size', '12px')
       .text((d) => d);
   }
