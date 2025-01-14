@@ -13,7 +13,7 @@
   <div class="filter-section">
     <h3>Gèneres disponibles</h3>
     <div class="genre-checkboxes">
-      <label *ngFor="let genre of filteredGenres">
+      <label class="genre-checkbox" *ngFor="let genre of filteredGenres">
         <input
           type="checkbox"
           [checked]="selectedGenres.includes(genre)"
@@ -31,7 +31,7 @@
         type="number"
         [(ngModel)]="popularity"
         (change)="emitFilters()"
-        placeholder="50"
+        placeholder="70"
       />
     </label>
   </div>

@@ -1,26 +1,26 @@
 <div class="header">
-    <h2>&lt; Comparació de característiques / &gt;</h2>
-  </div>
-  <p>
-    Les <strong>gràfiques de bombolles</strong> són útils per analitzar la relació entre
-    dues característiques musicals. Cada bombolla representa una cançó, amb la seva posició
-    determinada per les puntuacions en les dues característiques seleccionades. A més, el radi
-    de cada bombolla indica la popularitat de la cançó, permetent identificar patrons i
-    tendències musicals.
-  </p>
+  <h2>&lt; Comparació de característiques / &gt;</h2>
+</div>
+<p>
+  Les <strong>gràfiques de bombolles</strong> són útils per analitzar la relació
+  entre dues característiques musicals. Cada bombolla representa una cançó, amb
+  la seva posició determinada per les puntuacions en les dues característiques
+  seleccionades. A més, el radi de cada bombolla indica la popularitat de la
+  cançó, permetent identificar patrons i tendències musicals.
+</p>
 
-  <p>
-    Aquest tipus de gràfiques ajuda a identificar patrons, com ara quins gèneres tendeixen a tenir
-    una alta dansabilitat o energia, i com aquestes característiques varien entre gèneres.
-  </p>
-  
-  <div class="charts">
-    <div class="chart-grid">
-      <div class="chart-container" *ngFor="let pair of characteristicPairs">
-        <h3>{{ pair.x }} vs {{ pair.y }}</h3>
-        <div class="chart"></div>
-      </div>
+<p>
+  Aquest tipus de gràfiques ajuda a identificar patrons, com ara quins gèneres
+  tendeixen a tenir una alta dansabilitat o energia, i com aquestes
+  característiques varien entre gèneres.
+</p>
+
+<div class="charts">
+  <div class="chart-grid">
+    <div class="chart-container" *ngFor="let pair of characteristicPairs">
+      <h3>{{ pair.x }} vs {{ pair.y }}</h3>
+      <div class="chart"></div>
     </div>
     <div class="legend"></div>
   </div>
-  
+</div>

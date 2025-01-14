@@ -144,10 +144,11 @@ export class DataTableComponent implements OnInit {
   
     const svg = container
       .append('svg')
-      .attr('width', width + margin * 2) // Amplada amb marge
-      .attr('height', height + margin * 2) // Alçada amb marge
+      .attr('width', width
+      )
+      .attr('height', height)
       .append('g')
-      .attr('transform', `translate(${(width + margin * 2) / 2}, ${(height + margin * 2) / 2})`); // Centrat amb marge
+      .attr('transform', `translate(${(width) / 2}, ${(height) / 2})`);
   
     const rScale = d3.scaleLinear().range([0, radius]).domain([0, 1]);
   

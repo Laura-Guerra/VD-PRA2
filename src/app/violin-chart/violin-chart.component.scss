@@ -5,6 +5,7 @@
   gap: 30px; /* Espai entre la gràfica i el text */
   margin: 20px auto;
   max-width: 1400px; /* Limitar la mida màxima de l'àrea total */
+  align-items: center;
 }
 
 .chart-column {
@@ -48,4 +49,8 @@
 .chart-description em {
   font-style: italic;
   color: #555;
+}
+
+.plot-title{
+  text-align: start;
 }

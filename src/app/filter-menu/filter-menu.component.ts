@@ -10,7 +10,7 @@ export class FilterMenuComponent implements OnInit {
   genres: string[] = [];
   filteredGenres: string[] = [];
   genreSearch: string = '';
-  popularity: number = 50;
+  popularity: number = 75;
 
   @Input() selectedGenres: string[] = [];
   @Output() filtersChanged = new EventEmitter<{ genres: string[]; popularity: number }>();

@@ -33,8 +33,7 @@ export class ViolinChartComponent implements OnChanges {
 
     this.filteredData = this.data.filter(
       (track) =>
-        this.genres.includes(track.track_genre) &&
-        track.popularity >= this.popularity
+        this.genres.includes(track.track_genre)
     );
 
     this.createChart();
@@ -60,7 +59,7 @@ export class ViolinChartComponent implements OnChanges {
       .scaleBand()
       .domain(this.genres)
       .range([0, width])
-      .padding(0.05); // Ajusta l'espai entre els violins
+      .padding(0.05);
   
     const yScale = d3
       .scaleLinear()

@@ -28,10 +28,11 @@ import { MatInputModule } from '@angular/material/input';
 import { DataTableComponent } from './data-table/data-table.component';
 import { FormsModule } from '@angular/forms';
 import { BubbleChartComponent } from './bubble-chart/bubble-chart.component';
-import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
 import { ViolinChartComponent } from './violin-chart/violin-chart.component';
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { AiUsageComponent } from './ai-usage/ai-usage.component';
+import { FontsComponent } from './fonts/fonts.component';
 
 
 @NgModule({
@@ -47,10 +48,11 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     GobackButtonComponent,
     DataTableComponent,
     BubbleChartComponent,
-    StackedBarChartComponent,
     ViolinChartComponent,
     FilterMenuComponent,
     BarChartComponent,
+    AiUsageComponent,
+    FontsComponent,
   ],
   imports: [
     BrowserModule,

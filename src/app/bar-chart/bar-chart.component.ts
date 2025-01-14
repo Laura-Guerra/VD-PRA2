@@ -25,7 +25,7 @@ export class BarChartComponent implements OnInit {
   createChart(): void {
     const element = this.chartContainer.nativeElement;
     const margin = { top: 20, right: 20, bottom: 70, left: 50 };
-    const width = 800 - margin.left - margin.right;
+    const width = 625 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
     // Preprocessar les dades per comptar les cançons per gènere

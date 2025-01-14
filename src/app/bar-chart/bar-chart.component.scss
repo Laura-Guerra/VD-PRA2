@@ -1,8 +1,8 @@
 .chart-wrapper {
     display: flex;
     flex-direction: row; /* Text a l'esquerra, gràfica a la dreta */
-    align-items: flex-start;
-    gap: 20px; /* Espai entre el text i la gràfica */
+    align-items: center;
+    gap: 4rem;
     margin: 20px auto;
     max-width: 1200px;
   }
@@ -23,6 +23,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     line-height: 1.6;
+
+
   }
   
   .chart-description p {
