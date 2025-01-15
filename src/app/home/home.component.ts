@@ -5,7 +5,7 @@ import { ITrack } from '../interfaces/track.interface';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   showFilters: boolean = false;
@@ -24,10 +24,8 @@ export class HomeComponent {
   }
 
   updateFilters(event: { genres: string[]; popularity: number }): void {
-    console.log('Filtres actualitzats:', event);
     this.selectedGenres = event.genres;
     this.popularity = event.popularity;
-    this.data = [...this.data]
+    this.data = [...this.data];
   }
-  
 }

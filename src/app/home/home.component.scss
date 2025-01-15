@@ -1,297 +1,290 @@
-@import '../../styles.scss';
-
-  
-  
-  
-
+@import "../../styles.scss";
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .content-wrapper{
-        width: 90%;
-        h1 {
-            margin-top: 60px;
-            font-size: calc(36px + (60 - 36) * ((100vw - 320px) / (1920 - 320)));
-            text-align: center;
-            line-height: 40px;
-        }
-        .content-section {
-            margin: 50px 0;
-            text-align: center;
-            h2 {
-                font-size: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320)));
-                font-weight: 500px;
-                text-align: center;
-                margin-bottom: 40px;
-            }
-            h3 {
-                font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
-                font-weight: 500;
-                color: #333;
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .card-grid {
-                display: grid;
-                grid-template-columns: 1, 1fr;
-                grid-gap: 50px;
-                margin-bottom: 60px;
-                margin-left: 10px;
-                margin-right: 10px;
-                .card {
-                    background-color: $color-grey;
-                    border: 1px solid $color-black;
-                    width: 100%;
-                    height: 0;
-                    padding-bottom: 100%;
-                    position: relative;
-                    &::before,
-                    &::after {
-                        content: "";
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        z-index: -1;
-                        border: 3px solid $color-black;
-                        transition: all .25s ease-out;
-                    }
-                    &::before {
-                        background-color: $color-black;
-                        top: -15px;
-                        left: -15px;
-                    }
-                    &::after {
-                        bottom: -15px;
-                        right: -15px;
-                    }
-                    &:hover {
-                        &::before {
-                        top: 15px;
-                        left: 15px;
-                        }
-                        &::after {
-                        bottom: 15px;
-                        right: 15px;
-                        }
-                    }
-                }
-            }
-            .image-paragraph {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-left: 10px;
-                margin-right: 10px;
-                .content-image {
-                    background-image: url('../../assets/img/template-graph.png');
-                    background-size: contain;
-                    border: 1px solid $color-black;
-                    width: 100%;
-                    height: 0;
-                    padding-bottom: 100%;
-                    position: relative;
-                    &::before,
-                    &::after {
-                        content: "";
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        z-index: -1;
-                        border: 3px solid $color-black;
-                        transition: all .25s ease-out;
-                    }
-                    &::before {
-                        background-color: $color-black;
-                        top: -15px;
-                        left: -15px;
-                    }
-                    &::after {
-                        bottom: -15px;
-                        right: -15px;
-                    }
-                    &:hover {
-                        &::before {
-                        top: 15px;
-                        left: 15px;
-                        }
-                        &::after {
-                        bottom: 15px;
-                        right: 15px;
-                        }
-                    }
-                }
-                .content-text {
-                    font-size: calc(16px + (24 - 16) * ((100vw - 320px) / (1920 - 320)));
-                    margin: 40px 0;
-                }
-            }
-            button {
-                border: 2px solid $color-black;
-                border-radius: 10px;
-                text-transform: uppercase;
-                font-family: $font-mono;
-                background-color: transparent;
-                font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
-                padding: 6px 14px;
-                cursor: pointer;
-                &:hover {
-                    background-color: $color-black;
-                    color: #fff;
-                    font-weight: 700;
-                }
-            }
-        }
-        .divider {
-            width: 100%;
-            height: 2px;
-            background-color: $color-black;
-            margin: 40px 0;
-        }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .content-wrapper {
+    width: 90%;
+    h1 {
+      margin-top: 60px;
+      font-size: calc(36px + (60 - 36) * ((100vw - 320px) / (1920 - 320)));
+      text-align: center;
+      line-height: 40px;
     }
-    
-    .floating-container {
-        position: fixed;
-        top: 12vh; /* A 10% de l'alçada de la finestra */
-        right: 20px;
-        z-index: 1000;
+    .content-section {
+      margin: 50px 0;
+      text-align: center;
+      h2 {
+        font-size: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320)));
+        font-weight: 500px;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      h3 {
+        font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
+        font-weight: 500;
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: 1, 1fr;
+        grid-gap: 50px;
+        margin-bottom: 60px;
+        margin-left: 10px;
+        margin-right: 10px;
+        .card {
+          background-color: $color-grey;
+          border: 1px solid $color-black;
+          width: 100%;
+          height: 0;
+          padding-bottom: 100%;
+          position: relative;
+          &::before,
+          &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
+            border: 3px solid $color-black;
+            transition: all 0.25s ease-out;
+          }
+          &::before {
+            background-color: $color-black;
+            top: -15px;
+            left: -15px;
+          }
+          &::after {
+            bottom: -15px;
+            right: -15px;
+          }
+          &:hover {
+            &::before {
+              top: 15px;
+              left: 15px;
+            }
+            &::after {
+              bottom: 15px;
+              right: 15px;
+            }
+          }
+        }
+      }
+      .image-paragraph {
         display: flex;
         flex-direction: column;
-        align-items: flex-end; /* Manté el menú alineat amb el botó */
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        .content-image {
+          background-image: url("../../assets/img/template-graph.png");
+          background-size: contain;
+          border: 1px solid $color-black;
+          width: 100%;
+          height: 0;
+          padding-bottom: 100%;
+          position: relative;
+          &::before,
+          &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
+            border: 3px solid $color-black;
+            transition: all 0.25s ease-out;
+          }
+          &::before {
+            background-color: $color-black;
+            top: -15px;
+            left: -15px;
+          }
+          &::after {
+            bottom: -15px;
+            right: -15px;
+          }
+          &:hover {
+            &::before {
+              top: 15px;
+              left: 15px;
+            }
+            &::after {
+              bottom: 15px;
+              right: 15px;
+            }
+          }
+        }
+        .content-text {
+          font-size: calc(16px + (24 - 16) * ((100vw - 320px) / (1920 - 320)));
+          margin: 40px 0;
+        }
       }
-      
-      .floating-toggle-filters {
-        position: fixed;
-        top: 10vh; /* Posició del botó */
-        right: 20px;
-        z-index: 1000;
+      button {
         border: 2px solid $color-black;
-            border-radius: 10px;
-            text-transform: uppercase;
-            font-family: $font-mono;
-            background-color: transparent;
-            font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
-            padding: 6px 14px;
-            cursor: pointer;
-            &:hover {
-                background-color: $color-black;
-                color: #fff;
-                font-weight: 700;
-            }
-      }
-    
-      .floating-filters {
-        position: fixed;
-        top: calc(10vh + 50px); /* Just sota el botó */
-        right: 20px;
-        z-index: 999;
-        background-color: white;
-        border: 1px solid #ddd;
         border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    
-        /* Ajustos d'alçada */
-        min-height: 200px; /* Alçada mínima */
-        max-height: 400px; /* Alçada màxima amb scroll */
-        width: 300px; /* Amplada fixada */
-        overflow-y: auto; /* Activar scroll si el contingut excedeix l'alçada màxima */
+        text-transform: uppercase;
+        font-family: $font-mono;
+        background-color: transparent;
+        font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
+        padding: 6px 14px;
+        cursor: pointer;
+        &:hover {
+          background-color: $color-black;
+          color: #fff;
+          font-weight: 700;
+        }
       }
-      
+    }
+    .divider {
+      width: 100%;
+      height: 2px;
+      background-color: $color-black;
+      margin: 40px 0;
+    }
+  }
+
+  .floating-container {
+    position: fixed;
+    top: 12vh; /* A 10% de l'alçada de la finestra */
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Manté el menú alineat amb el botó */
+  }
+
+  .floating-toggle-filters {
+    position: fixed;
+    top: 10vh; /* Posició del botó */
+    right: 20px;
+    z-index: 1000;
+    border: 2px solid $color-black;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-family: $font-mono;
+    background-color: transparent;
+    font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
+    padding: 6px 14px;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-black;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  .floating-filters {
+    position: fixed;
+    top: calc(10vh + 50px); /* Just sota el botó */
+    right: 20px;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+
+    /* Ajustos d'alçada */
+    min-height: 200px; /* Alçada mínima */
+    max-height: 400px; /* Alçada màxima amb scroll */
+    width: 300px; /* Amplada fixada */
+    overflow-y: auto; /* Activar scroll si el contingut excedeix l'alçada màxima */
+  }
 }
 
-@media (min-width: 768px){
-    .container {
-        .content-wrapper{
-            width: 85%;
-            h1 {
-                line-height: 60px;
-            }
-            .content-section {
-                margin: 55px 0;
-                .card-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                    margin-left: 0;
-                    margin-right: 0;
-                }
-                .image-paragraph {
-                    margin: 0;
-                    .content-image {
-                        width: 55%;
-                        padding-bottom: 55%;
-                    }
-                    .content-text {
-                        margin: 50px 0;
-                    }
-                }
-            }
-            .divider {
-                height: 4px;
-                margin: 60px 0;
-            }
+@media (min-width: 768px) {
+  .container {
+    .content-wrapper {
+      width: 85%;
+      h1 {
+        line-height: 60px;
+      }
+      .content-section {
+        margin: 55px 0;
+        .card-grid {
+          grid-template-columns: repeat(2, 1fr);
+          margin-left: 0;
+          margin-right: 0;
         }
+        .image-paragraph {
+          margin: 0;
+          .content-image {
+            width: 55%;
+            padding-bottom: 55%;
+          }
+          .content-text {
+            margin: 50px 0;
+          }
+        }
+      }
+      .divider {
+        height: 4px;
+        margin: 60px 0;
+      }
     }
+  }
 }
 
-@media (min-width: 992px){
-    .container {
-        .content-wrapper{
-            .content-section {
-                margin: 60px 0;
-                .card-grid {
-                    grid-template-columns: repeat(3, 1fr);
-                    margin-bottom: 80px;
-                }
-                .image-paragraph {
-                    .content-image {
-                        width: 45%;
-                        padding-bottom: 45%;
-                    }
-                    .content-text {
-                        width: 80%;
-                        margin: 80px 0 50px 0;
-                    }
-                }
-            }
-            .divider {
-                height: 3px;
-                margin: 50px 0;
-            }
+@media (min-width: 992px) {
+  .container {
+    .content-wrapper {
+      .content-section {
+        margin: 60px 0;
+        .card-grid {
+          grid-template-columns: repeat(3, 1fr);
+          margin-bottom: 80px;
         }
+        .image-paragraph {
+          .content-image {
+            width: 45%;
+            padding-bottom: 45%;
+          }
+          .content-text {
+            width: 80%;
+            margin: 80px 0 50px 0;
+          }
+        }
+      }
+      .divider {
+        height: 3px;
+        margin: 50px 0;
+      }
     }
+  }
 }
 
-
-@media (min-width: 1200px){
-    .container {
-        .content-wrapper{
-            h1 {
-                line-height: 60px;
-            }
-            .content-section {
-                margin: 70px 0;
-                h2 {
-                    margin-bottom: 70px;
-                }
-                .card-grid {
-                    grid-template-columns: repeat(4, 1fr);
-                    margin-bottom: 90px;
-                }
-                .image-paragraph {
-                    .content-image {
-                        width: 30%;
-                        padding-bottom: 30%;
-                    }
-                    .content-text {
-                        width: 60%;
-                        margin: 100px 0 70px 0;
-                    }
-                }
-            }
-            .divider {
-                margin: 70px 0;
-            }
+@media (min-width: 1200px) {
+  .container {
+    .content-wrapper {
+      h1 {
+        line-height: 60px;
+      }
+      .content-section {
+        margin: 70px 0;
+        h2 {
+          margin-bottom: 70px;
         }
+        .card-grid {
+          grid-template-columns: repeat(4, 1fr);
+          margin-bottom: 90px;
+        }
+        .image-paragraph {
+          .content-image {
+            width: 30%;
+            padding-bottom: 30%;
+          }
+          .content-text {
+            width: 60%;
+            margin: 100px 0 70px 0;
+          }
+        }
+      }
+      .divider {
+        margin: 70px 0;
+      }
     }
+  }
 }

@@ -10,21 +10,23 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { FontsComponent } from './fonts/fonts.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'cardgrid', component: CardsLayoutComponent},
-  {path: 'carddetail', component: CardsDetailComponent},
-  {path: 'contact', component: ContactComponent},
-  {path: 'data', component: DataTableComponent},
-  {path: 'fonts', component: FontsComponent},
-  {path: '**', component: ErrorComponent},
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'cardgrid', component: CardsLayoutComponent },
+  { path: 'carddetail', component: CardsDetailComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'data', component: DataTableComponent },
+  { path: 'fonts', component: FontsComponent },
+  { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled',
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

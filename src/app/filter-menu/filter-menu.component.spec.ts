@@ -8,9 +8,8 @@ describe('FilterMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FilterMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [FilterMenuComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FilterMenuComponent);
     component = fixture.componentInstance;

@@ -6,7 +6,7 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
 })
 export class DataTableComponent implements OnInit {
   data: ITrack[] = []; // Totes les dades carregades
@@ -24,7 +24,7 @@ export class DataTableComponent implements OnInit {
     track_name: '',
     artist_name: '',
     track_genre: '',
-    popularity: 0
+    popularity: 0,
   };
 
   availableTrackGenre: string[] = []; // Llista d'idiomes disponibles
@@ -32,11 +32,13 @@ export class DataTableComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getTracks().subscribe(tracks => {
+    this.dataService.getTracks().subscribe((tracks) => {
       this.data = tracks;
       this.filteredData = [...this.data]; // Inicialment, totes les dades es mostren
       this.headers = Object.keys(this.data[0] || {}) as (keyof ITrack)[];
-      this.availableTrackGenre = Array.from(new Set(this.data.map(track => track.track_genre))).sort();
+      this.availableTrackGenre = Array.from(
+        new Set(this.data.map((track) => track.track_genre))
+      ).sort();
       this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
       this.loadPage();
     });
@@ -70,15 +72,24 @@ export class DataTableComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.filteredData = this.data.filter(track => {
-      const matchesTrackName = track.track_name.toLowerCase().includes(this.filters.track_name.toLowerCase());
-      const matchesArtistName = track.artist_name.some(artist =>
+    this.filteredData = this.data.filter((track) => {
+      const matchesTrackName = track.track_name
+        .toLowerCase()
+        .includes(this.filters.track_name.toLowerCase());
+      const matchesArtistName = track.artist_name.some((artist) =>
         artist.toLowerCase().includes(this.filters.artist_name.toLowerCase())
       );
-      const matchesGenre = this.filters.track_genre ? track.track_genre === this.filters.track_genre : true;
+      const matchesGenre = this.filters.track_genre
+        ? track.track_genre === this.filters.track_genre
+        : true;
       const matchesPopularity = track.popularity >= this.filters.popularity;
 
-      return matchesTrackName && matchesArtistName && matchesGenre && matchesPopularity;
+      return (
+        matchesTrackName &&
+        matchesArtistName &&
+        matchesGenre &&
+        matchesPopularity
+      );
     });
 
     this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
@@ -91,7 +102,7 @@ export class DataTableComponent implements OnInit {
       track_name: '',
       artist_name: '',
       track_genre: '',
-      popularity: 0
+      popularity: 0,
     };
     this.filteredData = [...this.data];
     this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
@@ -100,58 +111,53 @@ export class DataTableComponent implements OnInit {
   }
 
   showRadarChart(track: ITrack): void {
-    console.log('Hover activat per:', track.track_name);
-    console.log('ID del contenidor:', `#radar-chart-${track.track_id}`);
     this.hoveredTrack = track.track_id; // Estableix l'ID del track actiu
     setTimeout(() => {
       const container = d3.select(`#radar-chart-${track.track_id}`);
-      console.log('Contenidor radar-chart:', container.node());
       if (!container.empty()) {
         this.drawRadarChart(track); // Només dibuixa si el contenidor existeix
       }
     }, 0); // Retard curt per assegurar que el DOM està llest
   }
-  
+
   hideRadarChart(): void {
     this.hoveredTrack = null; // Amaga el radar chart
     d3.select('#radar-chart').selectAll('*').remove(); // Elimina el contingut del gràfic
   }
-  
 
   // Dibuixa el radar chart
   private drawRadarChart(track: ITrack): void {
     const container = d3.select(`#radar-chart-${track.track_id}`);
-    console.log('Contenidor radar-chart:', container.node());
     if (!container.node()) {
-      console.error(`El contenidor #radar-chart-${track.track_id} no existeix.`);
+      console.error(
+        `El contenidor #radar-chart-${track.track_id} no existeix.`
+      );
       return; // Atura si el contenidor no està disponible
     }
     container.selectAll('*').remove();
-  
+
     const data = [
       { axis: 'Energia', value: track.energy },
       { axis: 'Dansabilitat', value: track.danceability },
       { axis: 'València', value: track.valence },
       { axis: 'Acústica', value: track.acousticness },
-      { axis: 'Parla', value: track.speechiness }
+      { axis: 'Parla', value: track.speechiness },
     ];
-    console.log('Dades del radar chart:', data);
-  
+
     const margin = 50; // MARGE EXTRA
     const width = 300; // Amplada total del contenidor
     const height = 300; // Alçada total del contenidor
     const radius = Math.min(width, height) / 2 - margin; // Ajustem el radi per al marge
-  
+
     const svg = container
       .append('svg')
-      .attr('width', width
-      )
+      .attr('width', width)
       .attr('height', height)
       .append('g')
-      .attr('transform', `translate(${(width) / 2}, ${(height) / 2})`);
-  
+      .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
     const rScale = d3.scaleLinear().range([0, radius]).domain([0, 1]);
-  
+
     svg
       .selectAll('.levels')
       .data(d3.range(1, 6).reverse())
@@ -162,14 +168,14 @@ export class DataTableComponent implements OnInit {
       .style('fill', '#CDCDCD')
       .style('stroke', '#CDCDCD')
       .style('fill-opacity', 0.1);
-  
+
     const angleSlice = (Math.PI * 2) / data.length;
-  
+
     const radarLine = d3
       .lineRadial<{ axis: string; value: number }>()
       .radius((d) => rScale(d.value))
       .angle((d, i) => i * angleSlice);
-  
+
     svg
       .append('path')
       .datum(data)
@@ -177,10 +183,10 @@ export class DataTableComponent implements OnInit {
       .attr('d', radarLine as any)
       .style('fill', 'blue')
       .style('fill-opacity', 0.7);
-  
+
     // Afegir eixos
     const axisGrid = svg.append('g').attr('class', 'axisWrapper');
-  
+
     axisGrid
       .selectAll('.axis')
       .data(data)
@@ -193,7 +199,7 @@ export class DataTableComponent implements OnInit {
       .attr('y2', (d, i) => rScale(1) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('stroke', 'black')
       .style('stroke-width', '2px');
-  
+
     // Afegir etiquetes als eixos
     axisGrid
       .selectAll('.axisLabel')
@@ -207,8 +213,4 @@ export class DataTableComponent implements OnInit {
       .style('text-anchor', 'middle')
       .text((d) => d.axis);
   }
-  
-  
-
-
 }

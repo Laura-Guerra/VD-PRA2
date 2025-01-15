@@ -26,7 +26,6 @@ export class BubbleChartComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Canvis rebuts a BubbleChart:', changes);
   if (changes['genres'] || changes['popularity'] || changes['data']) {
     this.applyFilters();
   }

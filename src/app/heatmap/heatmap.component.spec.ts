@@ -8,9 +8,8 @@ describe('HeatmapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeatmapComponent ]
-    })
-    .compileComponents();
+      declarations: [HeatmapComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HeatmapComponent);
     component = fixture.componentInstance;

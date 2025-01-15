@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { ITrack } from '../interfaces/track.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   private tracksUrl = 'assets/data/tracks_final.csv';
@@ -14,8 +14,8 @@ export class DataService {
 
   constructor(private http: HttpClient) {
     this.tracks$ = this.http.get(this.tracksUrl, { responseType: 'text' }).pipe(
-      map(csv => this.parseTracks(csv)),
-      tap(tracks => this.tracksSubject.next(tracks)) // Emmagatzema els tracks processats
+      map((csv) => this.parseTracks(csv)),
+      tap((tracks) => this.tracksSubject.next(tracks)) // Emmagatzema els tracks processats
     );
   }
 
@@ -29,11 +29,15 @@ export class DataService {
 
   private parseTracks(csv: string): ITrack[] {
     const rows = csv.split('\n');
-    const headers = rows.shift()?.split(',').map(header => header.trim()) || [];
+    const headers =
+      rows
+        .shift()
+        ?.split(',')
+        .map((header) => header.trim()) || [];
 
     return rows
-      .filter(row => row.trim().length > 0)
-      .map(row => {
+      .filter((row) => row.trim().length > 0)
+      .map((row) => {
         const values = this.splitCSVRow(row);
         const track: any = {};
         headers.forEach((header, index) => {
@@ -43,7 +47,9 @@ export class DataService {
         return {
           track_id: track.track_id,
           track_name: track.track_name,
-          artist_name: track.artists ? track.artists.split(';').map((name: string) => name.trim()) : [],
+          artist_name: track.artists
+            ? track.artists.split(';').map((name: string) => name.trim())
+            : [],
           album_name: track.album_name,
           popularity: parseInt(track.popularity, 10) || 0,
           duration_ms: parseInt(track.duration_ms, 10) || 0,
@@ -61,7 +67,7 @@ export class DataService {
           tempo: parseFloat(track.tempo) || 0,
           time_signature: parseInt(track.time_signature, 10) || 0,
           track_genre: track.track_genre,
-          artist_popularity: parseInt(track.artist_popularity, 10) || 0
+          artist_popularity: parseInt(track.artist_popularity, 10) || 0,
         } as ITrack;
       });
   }

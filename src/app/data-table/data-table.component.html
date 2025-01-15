@@ -1,28 +1,43 @@
 <div class="container">
   <div class="content-wrapper">
-    <h1> &lt; CANÇONS / &gt;</h1>
+    <h1>&lt; CANÇONS / &gt;</h1>
     <div class="content-section">
-
       <!-- Formulari de filtres -->
       <div class="filters">
         <label>
           Nom del Track:
-          <input type="text" [(ngModel)]="filters.track_name" placeholder="Cerca per nom">
+          <input
+            type="text"
+            [(ngModel)]="filters.track_name"
+            placeholder="Cerca per nom"
+          />
         </label>
         <label>
           Nom de l'Artista:
-          <input type="text" [(ngModel)]="filters.artist_name" placeholder="Cerca per artista">
+          <input
+            type="text"
+            [(ngModel)]="filters.artist_name"
+            placeholder="Cerca per artista"
+          />
         </label>
         <label>
           Gènere:
           <select [(ngModel)]="filters.track_genre">
             <option value="">Tots</option>
-            <option *ngFor="let gen of availableTrackGenre" [value]="gen">{{ gen }}</option>
+            <option *ngFor="let gen of availableTrackGenre" [value]="gen">
+              {{ gen }}
+            </option>
           </select>
         </label>
         <label>
           Popularitat Mínima:
-          <input type="number" [(ngModel)]="filters.popularity" min="0" max="100" placeholder="Ex: 50">
+          <input
+            type="number"
+            [(ngModel)]="filters.popularity"
+            min="0"
+            max="100"
+            placeholder="Ex: 50"
+          />
         </label>
         <button (click)="applyFilters()">Aplicar Filtres</button>
         <button (click)="clearFilters()">Netejar Filtres</button>
@@ -42,31 +57,44 @@
         <tbody>
           <tr *ngFor="let track of currentData">
             <td>{{ track.track_name }}</td>
-            <td>{{ track.artist_name.join(', ') }}</td>
+            <td>{{ track.artist_name.join(", ") }}</td>
             <td>{{ track.album_name }}</td>
             <td>{{ track.track_genre }}</td>
             <td
-            (mouseenter)="showRadarChart(track)"
-            (mouseleave)="hideRadarChart()"
-            class="hover-cell"
+              (mouseenter)="showRadarChart(track)"
+              (mouseleave)="hideRadarChart()"
+              class="hover-cell"
             >
               <span>Veure</span>
               <div
                 class="radar-chart-container"
-                [ngClass]="{ 'visible': hoveredTrack === track.track_id, 'hidden': hoveredTrack !== track.track_id }"
+                [ngClass]="{
+                  visible: hoveredTrack === track.track_id,
+                  hidden: hoveredTrack !== track.track_id
+                }"
               >
-              <div id="radar-chart-{{ track.track_id }}" class="radar-chart"></div>
+                <div
+                  id="radar-chart-{{ track.track_id }}"
+                  class="radar-chart"
+                ></div>
               </div>
-            </td>                    
+            </td>
           </tr>
         </tbody>
       </table>
 
       <!-- Paginació -->
       <div class="pagination">
-        <button (click)="prevPage()" [disabled]="currentPage === 0">Anterior</button>
+        <button (click)="prevPage()" [disabled]="currentPage === 0">
+          Anterior
+        </button>
         <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Siguiente</button>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages - 1"
+        >
+          Siguiente
+        </button>
       </div>
     </div>
   </div>

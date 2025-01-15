@@ -7,7 +7,7 @@ import { ITrack } from '../interfaces/track.interface';
 @Component({
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.scss']
+  styleUrls: ['./bar-chart.component.scss'],
 })
 export class BarChartComponent implements OnInit {
   @ViewChild('chart', { static: true }) chartContainer!: ElementRef;
@@ -48,11 +48,7 @@ export class BarChartComponent implements OnInit {
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // Escales
-    const xScale = d3
-      .scaleBand()
-      .domain(genres)
-      .range([0, width])
-      .padding(0.2);
+    const xScale = d3.scaleBand().domain(genres).range([0, width]).padding(0.2);
 
     const yScale = d3
       .scaleLinear()
