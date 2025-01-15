@@ -8,7 +8,7 @@ import { ITrack } from '../interfaces/track.interface';
   providedIn: 'root'
 })
 export class DataService {
-  private tracksUrl = 'assets/data/tracks.csv';
+  private tracksUrl = 'assets/data/tracks_final.csv';
   private tracksSubject = new BehaviorSubject<ITrack[]>([]);
   private tracks$: Observable<ITrack[]>;
 

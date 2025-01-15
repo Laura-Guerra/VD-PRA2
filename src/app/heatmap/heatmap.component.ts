@@ -21,7 +21,7 @@ export class HeatmapComponent implements OnChanges {
     if (changes['genres'] || changes['popularity'] || changes['data']) {
       this.applyFilters();
     }
-  }
+  }  
 
   applyFilters(): void {
     if (!this.data || this.data.length === 0) {
@@ -34,7 +34,6 @@ export class HeatmapComponent implements OnChanges {
       acc[genre] = this.data.filter(
         (track) =>
           track.track_genre === genre &&
-          track.popularity >= this.popularity &&
           track.artist_popularity !== undefined
       );
       return acc;
@@ -42,18 +41,23 @@ export class HeatmapComponent implements OnChanges {
 
     console.log('Dades filtrades per gènere:', this.filteredData);
 
-    this.createHeatmaps();
+    setTimeout(() => this.createHeatmaps(), 0);
   }
 
   createHeatmaps(): void {
-    Object.entries(this.filteredData).forEach(([genre, tracks]) => {
+    this.genres.forEach((genre) => {
       const element = document.querySelector(`#heatmap-${genre}`) as HTMLElement;
+      if (!element) {
+        console.warn(`Contenidor no trobat per al gènere: ${genre}`);
+        return;
+      }
+  
+      d3.select(element).selectAll('*').remove();
+  
       const margin = { top: 20, right: 30, bottom: 60, left: 70 };
       const width = 400 - margin.left - margin.right;
       const height = 300 - margin.top - margin.bottom;
-
-      d3.select(element).select('svg').remove();
-
+  
       const svg = d3
         .select(element)
         .append('svg')
@@ -61,20 +65,21 @@ export class HeatmapComponent implements OnChanges {
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
-
+  
       const xScale = d3
         .scaleLinear()
-        .domain([0, 100]) // Popularitat de la cançó
+        .domain([0, 100])
         .range([0, width]);
-
+  
       const yScale = d3
         .scaleLinear()
-        .domain([0, 100]) // Popularitat de l'artista
+        .domain([0, 100])
         .range([height, 0]);
-
+  
       const colorScale = d3.scaleSequential(d3.interpolateBlues).domain([0, 100]);
-
+  
       // Dibuixar les cel·les del heatmap
+      const tracks = this.filteredData[genre] || [];
       tracks.forEach((track) => {
         svg
           .append('rect')
@@ -83,40 +88,17 @@ export class HeatmapComponent implements OnChanges {
           .attr('width', xScale(5) - xScale(0))
           .attr('height', yScale(0) - yScale(5))
           .attr('fill', colorScale(track.artist_popularity!))
-          .attr('opacity', 0.8)
-          .on('mouseover', (event) => {
-            const tooltip = d3
-              .select('body')
-              .append('div')
-              .attr('class', 'tooltip')
-              .style('position', 'absolute')
-              .style('background', '#fff')
-              .style('border', '1px solid #ccc')
-              .style('padding', '10px')
-              .style('border-radius', '5px')
-              .style('pointer-events', 'none')
-              .style('opacity', 1)
-              .html(
-                `<strong>Cançó:</strong> ${track.track_name}<br>` +
-                `<strong>Popularitat Cançó:</strong> ${track.popularity}<br>` +
-                `<strong>Popularitat Artista:</strong> ${track.artist_popularity}`
-              )
-              .style('left', `${event.pageX + 10}px`)
-              .style('top', `${event.pageY - 30}px`);
-          })
-          .on('mouseout', () => {
-            d3.select('body').select('.tooltip').remove();
-          });
+          .attr('opacity', 0.8);
       });
-
+  
       // Afegir eixos
       svg
         .append('g')
         .attr('transform', `translate(0,${height})`)
         .call(d3.axisBottom(xScale));
-
+  
       svg.append('g').call(d3.axisLeft(yScale));
-
+  
       // Afegir títols als eixos
       svg
         .append('text')
@@ -124,7 +106,7 @@ export class HeatmapComponent implements OnChanges {
         .attr('y', height + margin.bottom - 10)
         .attr('text-anchor', 'middle')
         .text('Popularitat de la Cançó');
-
+  
       svg
         .append('text')
         .attr('transform', 'rotate(-90)')
@@ -134,4 +116,5 @@ export class HeatmapComponent implements OnChanges {
         .text("Popularitat de l'Artista");
     });
   }
+  
 }
