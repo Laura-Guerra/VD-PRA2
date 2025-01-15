@@ -1,4 +1,3 @@
-// bar-chart.component.ts
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../services/data.service';
@@ -12,14 +11,24 @@ import { ITrack } from '../interfaces/track.interface';
 export class BarChartComponent implements OnInit {
   @ViewChild('chart', { static: true }) chartContainer!: ElementRef;
   data: ITrack[] = [];
+  filteredData: ITrack[] = []; // Dades filtrades
+  filtersEnabled: boolean = true; // Estat del checkbox
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.getTracks().subscribe((tracks) => {
       this.data = tracks;
-      this.createChart();
+      this.applyFilters(); // Filtrar les dades inicialment
     });
+  }
+
+  applyFilters(): void {
+    this.filteredData = this.filtersEnabled
+      ? this.data.filter((track) => track.popularity >= 50) // Ex: Filtrar popularitat > 50
+      : [...this.data]; // Sense filtres
+
+    this.createChart();
   }
 
   createChart(): void {
@@ -29,7 +38,7 @@ export class BarChartComponent implements OnInit {
     const height = 400 - margin.top - margin.bottom;
 
     // Preprocessar les dades per comptar les cançons per gènere
-    const genreCounts = this.data.reduce((acc, track) => {
+    const genreCounts = this.filteredData.reduce((acc, track) => {
       acc[track.track_genre] = (acc[track.track_genre] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -47,7 +56,6 @@ export class BarChartComponent implements OnInit {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Escales
     const xScale = d3.scaleBand().domain(genres).range([0, width]).padding(0.2);
 
     const yScale = d3
@@ -55,7 +63,6 @@ export class BarChartComponent implements OnInit {
       .domain([0, d3.max(counts) || 0])
       .range([height, 0]);
 
-    // Eixos
     svg
       .append('g')
       .attr('transform', `translate(0,${height})`)
@@ -63,7 +70,6 @@ export class BarChartComponent implements OnInit {
 
     svg.append('g').call(d3.axisLeft(yScale));
 
-    // Títol de l'eix X
     svg
       .append('text')
       .attr('text-anchor', 'middle')
@@ -71,7 +77,6 @@ export class BarChartComponent implements OnInit {
       .attr('y', height + margin.bottom - 10)
       .text('Gèneres Musicals');
 
-    // Títol de l'eix Y
     svg
       .append('text')
       .attr('text-anchor', 'middle')
@@ -80,7 +85,6 @@ export class BarChartComponent implements OnInit {
       .attr('y', -margin.left + 15)
       .text('Nombre de Cançons');
 
-    // Crear tooltip
     const tooltip = d3
       .select(element)
       .append('div')
@@ -93,7 +97,6 @@ export class BarChartComponent implements OnInit {
       .style('pointer-events', 'none')
       .style('visibility', 'hidden');
 
-    // Barres amb events de hover
     svg
       .selectAll('.bar')
       .data(genres)
@@ -118,5 +121,10 @@ export class BarChartComponent implements OnInit {
       .on('mouseout', () => {
         tooltip.style('visibility', 'hidden');
       });
+  }
+
+  toggleFilters(): void {
+    this.filtersEnabled = !this.filtersEnabled;
+    this.applyFilters();
   }
 }
