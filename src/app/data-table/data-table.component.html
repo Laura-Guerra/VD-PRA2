@@ -9,6 +9,7 @@
           <input
             type="text"
             [(ngModel)]="filters.track_name"
+            (ngModelChange)="applyFilters()"
             placeholder="Cerca per nom"
           />
         </label>
@@ -17,12 +18,16 @@
           <input
             type="text"
             [(ngModel)]="filters.artist_name"
+            (ngModelChange)="applyFilters()"
             placeholder="Cerca per artista"
           />
         </label>
         <label>
           Gènere:
-          <select [(ngModel)]="filters.track_genre">
+          <select
+            [(ngModel)]="filters.track_genre"
+            (ngModelChange)="applyFilters()"
+          >
             <option value="">Tots</option>
             <option *ngFor="let gen of availableTrackGenre" [value]="gen">
               {{ gen }}
@@ -34,12 +39,12 @@
           <input
             type="number"
             [(ngModel)]="filters.popularity"
+            (ngModelChange)="applyFilters()"
             min="0"
             max="100"
             placeholder="Ex: 50"
           />
         </label>
-        <button (click)="applyFilters()">Aplicar Filtres</button>
         <button (click)="clearFilters()">Netejar Filtres</button>
       </div>
 
@@ -51,6 +56,8 @@
             <th>Artista</th>
             <th>Àlbum</th>
             <th>Gènere</th>
+            <th>Popularitat</th>
+            <th>Popularitat de l'artista</th>
             <th>Característiques</th>
           </tr>
         </thead>
@@ -60,6 +67,9 @@
             <td>{{ track.artist_name.join(", ") }}</td>
             <td>{{ track.album_name }}</td>
             <td>{{ track.track_genre }}</td>
+            <td>{{ track.popularity }}</td>
+            <td>{{ track.artist_popularity }}</td>
+
             <td
               (mouseenter)="showRadarChart(track)"
               (mouseleave)="hideRadarChart()"
